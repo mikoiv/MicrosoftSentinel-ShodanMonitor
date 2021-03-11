@@ -36,7 +36,7 @@ Here is a visualization from the current version in Logic App designer:
 
 After creating the Logic App, you need to transfer the custom URL from the HTTP listener action to your Shodan Monitor configuration:
 
-pic
+[![Designer](https://github.com/mikoiv/AzureSentinel-ShodanMonitor/blob/main/Shodan_configuration.png)](https://github.com/mikoiv/AzureSentinel-ShodanMonitor/blob/main/Shodan_configuration.png)
 
 Here is a screenshot of querying the data in Azure Sentinel:
 
