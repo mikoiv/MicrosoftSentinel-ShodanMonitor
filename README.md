@@ -32,7 +32,7 @@ Another problem I faced is that the Webhook request does not have Content-Type s
 
 Here is a visualization from current version in Logic App designer:
 
-[![Designer](https://github.com/mikoiv/AzureSentinel-ShodanMonitor/blob/main/LogicApp-DesignerView.png)](https://github.com/mikoiv/AzureSentinel-ShodanMonitor/blob/main/LogicApp-DesignerView.png)
+[![Designer](https://github.com/mikoiv/AzureSentinel-ShodanMonitor/blob/main/LogicApp_designer_view.png)](https://github.com/mikoiv/AzureSentinel-ShodanMonitor/blob/main/LogicApp_designer_view.png)
 
 ## Development needs
 
