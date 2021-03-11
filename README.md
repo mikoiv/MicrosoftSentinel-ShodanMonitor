@@ -4,7 +4,7 @@
 
 This is a proof-of-concept for ingesting Shodan Monitor alerts to Azure Sentinel.
 
-Shodan Monitor is a service for Shodan subscribers that can detect the following alerts in any public endpoints, hosts or addresses you configure for monitoring:
+Shodan Monitor is a service for Shodan subscribers that can detect the following issues in any public endpoints, hosts or addresses you configure for monitoring:
 * Services associated with ICS or IOT devices
 * Compromised or malware-related services
 * New open ports, uncommon open ports
