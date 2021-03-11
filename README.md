@@ -34,6 +34,10 @@ Here is a visualization from current version in Logic App designer:
 
 [![Designer](https://github.com/mikoiv/AzureSentinel-ShodanMonitor/blob/main/LogicApp_designer_view.png)](https://github.com/mikoiv/AzureSentinel-ShodanMonitor/blob/main/LogicApp_designer_view.png)
 
+Here is a screenshot of querying the data in Azure Sentinel:
+
+[![Sentinel](https://github.com/mikoiv/AzureSentinel-ShodanMonitor/blob/main/Sentinel_log_query.png)](https://github.com/mikoiv/AzureSentinel-ShodanMonitor/blob/main/Sentinel_log_query.png)
+
 ## Development needs
 
 As you can see, this solution is extremely simple. I am sure the Logic App could be written with better code, for a production setup you would want to think about the following:
