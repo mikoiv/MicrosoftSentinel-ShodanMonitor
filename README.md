@@ -28,7 +28,7 @@ At the moment the solution only gathers the following data:
 
 Reason for the simplicity is that at the moment I don't have enough time to learn certain things about Logic Apps that are still unfamiliar for me. For example I am unsure on the best way to combine the header and post data, instead of creating individual variables via two different methods. 
 
-Another problem I faced is that the Webhook request does not have Content-Type set to JSON, which is something that Logic App expects. This gave me some trouble when I tried to parse the full body schema in a cleaner way.
+Another problem I faced is that the Shodan request does not have Content-Type set to JSON, which is something that Logic App expects. This gave me some trouble when I tried to parse the full body schema in a cleaner way.
 
 Here is a visualization from the current version in Logic App designer:
 
