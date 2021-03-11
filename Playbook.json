@@ -108,7 +108,7 @@
                     },
                     "host": {
                         "connection": {
-                            "name": "@parameters('$connections')['azureloganalyticsdatacollector']['connectionId']"
+                            "name": "@parameters('$connections')['ConnectionX']['connectionId']"
                         }
                     },
                     "method": "post",
