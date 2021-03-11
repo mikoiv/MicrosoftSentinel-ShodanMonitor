@@ -1,0 +1,155 @@
+{
+    "definition": {
+        "$schema": "https://schema.management.azure.com/providers/Microsoft.Logic/schemas/2016-06-01/workflowdefinition.json#",
+        "actions": {
+            "Body_IP": {
+                "inputs": {
+                    "variables": [
+                        {
+                            "name": "Shodan_body_ip",
+                            "type": "string",
+                            "value": "@{json(triggerBody())?['ip_str']}"
+                        }
+                    ]
+                },
+                "runAfter": {
+                    "Header_Alert_Trigger": [
+                        "Succeeded"
+                    ]
+                },
+                "type": "InitializeVariable"
+            },
+            "Body_Port": {
+                "inputs": {
+                    "variables": [
+                        {
+                            "name": "Shodan_body_port",
+                            "type": "string",
+                            "value": "@{json(triggerBody())?['port']}"
+                        }
+                    ]
+                },
+                "runAfter": {
+                    "Body_IP": [
+                        "Succeeded"
+                    ]
+                },
+                "type": "InitializeVariable"
+            },
+            "Header_Alert_ID": {
+                "inputs": {
+                    "variables": [
+                        {
+                            "name": "Shodan_header_alert_id",
+                            "type": "string",
+                            "value": "@{variables('Shodan_headers')['SHODAN-ALERT-ID']}"
+                        }
+                    ]
+                },
+                "runAfter": {
+                    "Header_Alert_Name": [
+                        "Succeeded"
+                    ]
+                },
+                "type": "InitializeVariable"
+            },
+            "Header_Alert_Name": {
+                "inputs": {
+                    "variables": [
+                        {
+                            "name": "Shodan_header_alert_name",
+                            "type": "string",
+                            "value": "@{variables('Shodan_headers')['SHODAN-ALERT-NAME']}"
+                        }
+                    ]
+                },
+                "runAfter": {
+                    "Initialize_variables_from_headers": [
+                        "Succeeded"
+                    ]
+                },
+                "type": "InitializeVariable"
+            },
+            "Header_Alert_Trigger": {
+                "inputs": {
+                    "variables": [
+                        {
+                            "name": "Shodan_header_alert_trigger",
+                            "type": "string",
+                            "value": "@{variables('Shodan_headers')['SHODAN-ALERT-TRIGGER']}"
+                        }
+                    ]
+                },
+                "runAfter": {
+                    "Header_Alert_ID": [
+                        "Succeeded"
+                    ]
+                },
+                "type": "InitializeVariable"
+            },
+            "Initialize_variables_from_headers": {
+                "inputs": {
+                    "variables": [
+                        {
+                            "name": "Shodan_headers",
+                            "type": "object",
+                            "value": "@triggerOutputs()['headers']"
+                        }
+                    ]
+                },
+                "runAfter": {},
+                "type": "InitializeVariable"
+            },
+            "Send_Data_to_Log_Analytics": {
+                "inputs": {
+                    "body": "{\n\"AlertName\":\"@{variables('Shodan_header_alert_name')}\",\n\"AlertID\":\"@{variables('Shodan_header_alert_id')}\",\n\"AlertTrigger\":\"@{variables('Shodan_header_alert_trigger')}\",\n\"IPAddress\":\"@{variables('Shodan_body_ip')}\",\n\"Port\":\"@{variables('Shodan_body_port')}\"\n}",
+                    "headers": {
+                        "Log-Type": "ShodanMonitorTest"
+                    },
+                    "host": {
+                        "connection": {
+                            "name": "@parameters('$connections')['azureloganalyticsdatacollector']['connectionId']"
+                        }
+                    },
+                    "method": "post",
+                    "path": "/api/logs"
+                },
+                "runAfter": {
+                    "Body_Port": [
+                        "Succeeded"
+                    ]
+                },
+                "type": "ApiConnection"
+            }
+        },
+        "contentVersion": "1.0.0.0",
+        "outputs": {},
+        "parameters": {
+            "$connections": {
+                "defaultValue": {},
+                "type": "Object"
+            }
+        },
+        "triggers": {
+            "manual": {
+                "inputs": {
+                    "method": "POST",
+                    "schema": {}
+                },
+                "kind": "Http",
+                "type": "Request"
+            }
+        }
+    },
+    "parameters": {
+        "$connections": {
+            "value": {
+                "ConnectionX": {
+                    "connectionId": "/subscriptions/SubscriptionX/resourceGroups/ResourceGroupX/providers/Microsoft.Web/connections/ConnectionX",
+                    "connectionName": "ConnectionX",
+                    "id": "/subscriptions/SubscriptionX/providers/Microsoft.Web/locations/LocationX/managedApis/ConnectionX"
+                }
+            }
+        }
+    }
+}
