@@ -35,7 +35,7 @@ As you can see, this solution is extremely simple. I am sure the Logic App could
 
 In this proof of concept security and authentication is just based on making sure you transfer the custom Logic App HTTP listener URL to Shodan in a secure manner.
 
-I created the solution as a quick test in the Logic App UI, so no automation template for you just yet.
+I created the solution as a quick test in the Logic App UI, so no automation template for you just yet. Manually exported code from the Logic App is included, so you can have a look at that.
 
 
 
