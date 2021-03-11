@@ -2,7 +2,7 @@
 
 ## Background
 
-This is a proof-of-concept for an Azure Sentinel Playbook for ingesting Shodan Monitor alerts.
+This is a proof-of-concept for an ingesting Shodan Monitor alerts to Azure Sentinel.
 
 Shodan Monitor is a service for Shodan subscribers that can detect the following alerts in any public endpoints, hosts or addresses you configure for monitoring:
 * Services associated with ICS or IOT devices
@@ -62,7 +62,7 @@ As you can see, this solution is extremely simple. I am sure the Logic App could
 * Think about error handling
 * Harden the solution for your security needs
 
-In this proof of concept security and authentication is just based on making sure you transfer the custom Logic App HTTP listener URL to Shodan in a secure manner.
+In this proof-of-concept security and authentication is just based on making sure you transfer the custom Logic App HTTP listener URL to Shodan in a secure manner. This can be developed further with the Logic App or even creating a API Management service to act as a secure front-end for your Logic App HTTP listeners.
 
 I created the solution as a quick test in the Logic App UI, so no automation template for you just yet. Manually exported code from the Logic App is included, so you can have a look at that.
 
