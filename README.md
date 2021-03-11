@@ -30,7 +30,7 @@ Reason for the simplicity is that at the moment I don't have enough time to lear
 
 Another problem I faced is that the Webhook request does not have Content-Type set to JSON, which is something that Logic App expects. This gave me some trouble when I tried to parse the full body schema in a cleaner way.
 
-Here is a visualization from current version in Logic App designer:
+Here is a visualization from the current version in Logic App designer:
 
 [![Designer](https://github.com/mikoiv/AzureSentinel-ShodanMonitor/blob/main/LogicApp_designer_view.png)](https://github.com/mikoiv/AzureSentinel-ShodanMonitor/blob/main/LogicApp_designer_view.png)
 
