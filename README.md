@@ -42,6 +42,8 @@ You can configure a new Notification Webhook in Shodan Monitor configuration bas
 
 [![ShodanConfig](https://github.com/mikoiv/AzureSentinel-ShodanMonitor/blob/main/Shodan_configuration.png)](https://github.com/mikoiv/AzureSentinel-ShodanMonitor/blob/main/Shodan_configuration.png)
 
+Make sure you enable this notification method when you add and configure your assets in Shodan Monitor. Depending on your assets and environment you may start getting new alerts sooner or later. A good way to test is to add new networks that you know will generate findings. Shodan Monitor also has a Test Webhook action but be aware that the test will not contain any data so you will not see much in Sentinel, but you can use it to make sure the basic logic works.
+
 Here is a screenshot of querying the data in Azure Sentinel:
 
 [![Sentinel](https://github.com/mikoiv/AzureSentinel-ShodanMonitor/blob/main/Sentinel_log_query.png)](https://github.com/mikoiv/AzureSentinel-ShodanMonitor/blob/main/Sentinel_log_query.png)
