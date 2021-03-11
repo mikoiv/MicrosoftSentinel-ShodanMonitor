@@ -24,7 +24,7 @@ In this proof of concept security and authentication is just based on making sur
 
 Here is a visualization from the Logic App designer:
 
-[![Designer](https://github.com/mikoiv/AzureSentinel-ShodanMonitor/blob/master/LogicApp_designer_view.png)](https://github.com/mikoiv/AzureSentinel-ShodanMonitor/blob/master/LogicApp_designer_view.png)
+[![Designer](https://github.com/mikoiv/AzureSentinel-ShodanMonitor/blob/main/LogicApp_designer_view.png)](https://github.com/mikoiv/AzureSentinel-ShodanMonitor/blob/main/LogicApp_designer_view.png)
 
 ## How-to
 
