@@ -14,7 +14,7 @@ Shodan Monitor is a service for Shodan subscribers that can detect the following
 
 Shodan Monitor has a Notification service that can send these alerts via email, instant messaging or a Notification Webhook.
 
-The Notification Webhook sends an HTTP POST request every time it detects an alert that matches the alert triggers you have configured in Shodan Monitor. The request contains alert metadata in the HTTP headers and Shodan database based host data in the body.
+The Notification Webhook sends an HTTP POST request every time it detects an issue that matches the alert triggers you have configured in Shodan Monitor. The request contains alert metadata in the HTTP headers and Shodan database based host data in the body.
 
 This solution provides a method of ingesting the Notification Webhook alerts to Azure Sentinel for alerting and hunting. It uses a Logic App HTTP endpoint that listens to incoming requests, parses a selected amount of the alert data into variables and writes those to the Log Analytics Workspace.
 
