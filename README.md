@@ -10,7 +10,6 @@ The Notification Webhook is a configuration in Shodan Monitor, that sends an HTT
 
 You can the official data description in https://help.shodan.io/developer-fundamentals/monitor-webhooks
 
-
 ## Current status
 
 At the moment the solution only gathers the following data:
@@ -25,11 +24,11 @@ Here is a visualization from the Logic App designer:
 
 [![Designer](https://github.com/mikoiv/AzureSentinel-ShodanMonitor/blob/main/LogicApp_designer_view.png)](https://github.com/mikoiv/AzureSentinel-ShodanMonitor/blob/main/LogicApp_designer_view.png)
 
-## Develoment
+## Development needs
 
 As you can see, this solution is extremely simple. I am sure the Logic App could be written with better code, for a production setup you would want to think about the following:
 * Handle the header and body data in a more robust way
-* Map the full Shodan JSON schema 
+* Map the full Shodan JSON schema to fetch the hostname, vulnerability data, country codes etc
 * Think about error handling
 * Harden the solution for your security needs
 
