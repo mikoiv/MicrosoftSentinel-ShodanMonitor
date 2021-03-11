@@ -5,7 +5,7 @@
 This is a proof-of-concept for ingesting Shodan Monitor alerts to Azure Sentinel.
 
 Shodan Monitor is a service for Shodan subscribers that can detect the following issues in any public endpoints, hosts or addresses you configure for monitoring:
-* Services associated with ICS or IOT devices
+* Services associated with ICS or IoT devices
 * Compromised or malware-related services
 * New open ports, uncommon open ports
 * Open databases
@@ -18,7 +18,7 @@ The Notification Webhook sends an HTTP POST request every time it detects an ale
 
 This solution provides a method of ingesting the Notification Webhook alerts to Azure Sentinel for alerting and hunting. It uses a Logic App HTTP endpoint that listens to incoming requests, parses a selected amount of the alert data into variables and writes those to the Log Analytics Workspace.
 
-You can the official Notification Webhook documentation here: https://help.shodan.io/developer-fundamentals/monitor-webhooks
+You can find the official Notification Webhook documentation here: https://help.shodan.io/developer-fundamentals/monitor-webhooks
 
 ## Current status
 
