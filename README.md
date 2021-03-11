@@ -38,6 +38,8 @@ Here is a screenshot of querying the data in Azure Sentinel:
 
 [![Sentinel](https://github.com/mikoiv/AzureSentinel-ShodanMonitor/blob/main/Sentinel_log_query.png)](https://github.com/mikoiv/AzureSentinel-ShodanMonitor/blob/main/Sentinel_log_query.png)
 
+Even with this base amount of data there are decent use cases for correlating, alerting or hunting for things related to your your public security posture and attack surface with Azure Sentinel.
+
 ## Development needs
 
 As you can see, this solution is extremely simple. I am sure the Logic App could be written with better code, for a production setup you would want to think about the following:
