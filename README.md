@@ -34,9 +34,11 @@ Here is a visualization from the current version in Logic App designer:
 
 [![Designer](https://github.com/mikoiv/AzureSentinel-ShodanMonitor/blob/main/LogicApp_designer_view.png)](https://github.com/mikoiv/AzureSentinel-ShodanMonitor/blob/main/LogicApp_designer_view.png)
 
-After creating the Logic App, you can find the custom listener URL from the first Logic App action and transfer that to your Shodan Monitor configuration:
+After creating the Logic App, you can find the custom listener URL from the first Logic App action:
 
 [![URL](https://github.com/mikoiv/AzureSentinel-ShodanMonitor/blob/main/LogicApp_URL.png)](https://github.com/mikoiv/AzureSentinel-ShodanMonitor/blob/main/LogicApp_URL.png)
+
+You can configure a new Notification Webhook in Shodan Monitor configuration based on the URL:
 
 [![ShodanConfig](https://github.com/mikoiv/AzureSentinel-ShodanMonitor/blob/main/Shodan_configuration.png)](https://github.com/mikoiv/AzureSentinel-ShodanMonitor/blob/main/Shodan_configuration.png)
 
