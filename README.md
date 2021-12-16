@@ -37,3 +37,6 @@ When deploying the template you have the following parameters to configure:
 | **Log Analytics Workspace ID**|Enter the unique ID of your Azure Log Analytics workspace|
 | **Log Analytics Workspace Key**|Enter the primary or secondary key of your Azure Log Analytics workspace|
 
+## Logic App design
+
+[![Log query](https://github.com/mikoiv/MicrosoftSentinel-ShodanMonitor/blob/main/Images/logicapp-designer-light.png)](https://github.com/mikoiv/MicrosoftSentinel-ShodanMonitor/blob/main/Images/logicapp-designer-light.png)
