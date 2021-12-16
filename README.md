@@ -1,4 +1,4 @@
-# MicrosoftSentinel-ShodanMonitorAlerts
+# MicrosoftSentinel-ShodanMonitor
 
 ## Introduction
 
