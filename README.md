@@ -10,7 +10,7 @@ Shodan Monitor is a service for Shodan subscribers that can detect the following
 * Known vulnerabilities
 * Expired certificates
 
-In brief it is a method of managing public attack surface, usually for your own assets.
+In brief it provides a service for managing public attack surface, usually for your own assets.
 
 This repository contains an Azure Logic App for ingesting Shodan Monitor alerts for querying, alerting and hunting in Microsoft Sentinel:
 
