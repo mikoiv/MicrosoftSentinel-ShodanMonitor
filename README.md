@@ -12,7 +12,7 @@ Shodan Monitor is a service for Shodan subscribers that can detect the following
 
 In brief it is a method of managing public attack surface, usually for your own assets.
 
-This repository contains an Azure Logic App for ingesting Shodan Monitor for querying, alerting and hunting in Microsoft Sentinel:
+This repository contains an Azure Logic App for ingesting Shodan Monitor alerts for querying, alerting and hunting in Microsoft Sentinel:
 
 [![Log query](https://github.com/mikoiv/MicrosoftSentinel-ShodanMonitor/blob/main/Images/sentinel-logquery.png)](https://github.com/mikoiv/MicrosoftSentinel-ShodanMonitor/blob/main/Images/sentinel-logquery.png)
 
