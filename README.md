@@ -14,7 +14,7 @@ In brief it is a method of managing public attack surface, usually for your own 
 
 This repository contains simple Microsoft Sentinel Logic App for ingesting Shodan Monitor alerts to Sentinel for you to query and alert on:
 
-[![Log query](https://github.com/mikoiv/MicrosoftSentinel-ShodanMonitor/blob/main/Images/sentinel-query.png)](https://github.com/mikoiv/MicrosoftSentinel-ShodanMonitor/blob/main/Images/sentinel-query.png)
+[![Log query](https://github.com/mikoiv/MicrosoftSentinel-ShodanMonitor/blob/main/Images/sentinel-logquery.png)](https://github.com/mikoiv/MicrosoftSentinel-ShodanMonitor/blob/main/Images/sentinel-logquery.png)
 
 For further details you can read the following writeup: 
 
