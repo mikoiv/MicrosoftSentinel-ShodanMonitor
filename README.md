@@ -16,7 +16,7 @@ This repository contains an Azure Logic App for ingesting Shodan Monitor alerts 
 
 [![Log query](https://github.com/mikoiv/MicrosoftSentinel-ShodanMonitor/blob/main/Images/sentinel-logquery.png)](https://github.com/mikoiv/MicrosoftSentinel-ShodanMonitor/blob/main/Images/sentinel-logquery.png)
 
-For further details you can read the following writeup: 
+For further details and instructions you can read the following writeup: 
 
 **http://secopslab.fi/2021-12-microsoftsentinel-shodanmonitor/**
 
@@ -37,3 +37,4 @@ When deploying the template you have the following parameters to configure:
 | **Log Analytics Workspace ID**|Enter the unique ID of your Azure Log Analytics workspace|
 | **Log Analytics Workspace Key**|Enter the primary or secondary key of your Azure Log Analytics workspace|
 
+The URL you need to provide Shodan Monitor can be found from the Logic App HTTP trigger, after deployment.
