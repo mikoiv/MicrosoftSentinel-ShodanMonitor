@@ -39,4 +39,6 @@ When deploying the template you have the following parameters to configure:
 
 ## Logic App design
 
+Sceenshot from Logic App designer view for reference:
+
 [![Log query](https://github.com/mikoiv/MicrosoftSentinel-ShodanMonitor/blob/main/Images/logicapp-designer-light.png)](https://github.com/mikoiv/MicrosoftSentinel-ShodanMonitor/blob/main/Images/logicapp-designer-light.png)
