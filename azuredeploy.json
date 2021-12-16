@@ -1,0 +1,345 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "metadata": {
+        "title": "Shodan Monitor Alerts to Microsoft Sentinel",
+        "description": "This playbook listens for HTTP requests from Shodan Monitor alerts and ingests them to Log Analytics .",
+        "lastUpdateTime": "2021-12-16T00:00:00.000Z",
+        "support": {
+            "tier": "community"
+        },
+        "author": {
+            "name": "Mikko Koivunen"
+        }
+    },
+    "parameters": {
+        "location":{
+            "type": "string",
+            "defaultValue": "[resourceGroup().location]"
+        },
+        "Playbook_Name": {
+            "defaultValue": "ShodanMonitor-Sentinel",
+            "type": "String"
+        },
+        "Log_Analytics_Connection_Name": {
+            "type": "string",
+            "defaultValue": "loganalyticsconnection-ShodanMonitor-Sentinel"
+        },
+        "Log_Analytics_Workspace_ID": {
+            "type": "string",
+            "defaultValue":"ID",
+            "metadata": {
+             "description": "The unique identifier of the Azure Log Analytics workspace."
+            }
+        },
+        "Log_Analytics_Workspace_Key": {
+            "type": "securestring",
+            "defaultValue":"key",
+            "metadata": {
+                "description": "The primary or secondary key of the Azure Log Analytics workspace."
+            }
+        }
+    },
+    "variables": {},
+    "resources": [
+        {
+            "type": "MICROSOFT.WEB/CONNECTIONS",
+            "apiVersion": "2018-07-01-preview",
+            "name": "[parameters('Log_Analytics_Connection_Name')]",
+            "location": "[parameters('location')]",
+            "properties": {
+                "api": {
+                    "id": "[concat(subscription().id, '/providers/Microsoft.Web/locations/', parameters('location'), '/managedApis/', 'azureloganalyticsdatacollector')]"
+                },
+                "displayName": "[parameters('Log_Analytics_Connection_Name')]",
+                "parameterValues": {
+                    "username": "[parameters('Log_Analytics_Workspace_ID')]",
+                    "password": "[parameters('Log_Analytics_Workspace_Key')]"
+                }
+            }
+        },
+        {
+            "type": "Microsoft.Logic/workflows",
+            "apiVersion": "2017-07-01",
+            "name": "[parameters('Playbook_Name')]",
+            "location": "[resourceGroup().location]",
+            "tags": {
+                "LogicAppsCategory": "security"
+            },
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/connections', parameters('Log_Analytics_Connection_Name'))]"
+            ],
+            "properties": {
+                "state": "Enabled",
+                "definition": {
+                    "$schema": "https://schema.management.azure.com/providers/Microsoft.Logic/schemas/2016-06-01/workflowdefinition.json#",
+                    "contentVersion": "1.0.0.0",
+                    "parameters": {
+                        "$connections": {
+                            "defaultValue": {},
+                            "type": "Object"
+                        }
+                    },
+                    "triggers": {
+                        "manual": {
+                            "type": "Request",
+                            "kind": "Http",
+                            "inputs": {
+                               "schema": {}
+                            }
+                        }
+                    },
+                    "actions": {
+                        "If_HTTP_request_is_from_Shodan_process_the_request": {
+                            "actions": {
+                                "Parse_alert_body_schema_from_Shodan_request": {
+                                    "runAfter": {},
+                                    "type": "ParseJson",
+                                    "inputs": {
+                                        "content": "@triggerBody()",
+                                        "schema": {
+                                            "properties": {
+                                                "_shodan": {
+                                                    "properties": {
+                                                        "crawler": {
+                                                            "type": "string"
+                                                        },
+                                                        "id": {
+                                                            "type": "string"
+                                                        },
+                                                        "module": {
+                                                            "type": "string"
+                                                        },
+                                                        "options": {
+                                                            "properties": {},
+                                                            "type": "object"
+                                                        },
+                                                        "ptr": {
+                                                            "type": "boolean"
+                                                        }
+                                                    },
+                                                    "type": "object"
+                                                },
+                                                "asn": {
+                                                    "type": "string"
+                                                },
+                                                "data": {
+                                                    "type": "string"
+                                                },
+                                                "dns": {
+                                                    "properties": {
+                                                        "recursive": {
+                                                            "type": "boolean"
+                                                        },
+                                                        "resolver_hostname": {},
+                                                        "resolver_id": {},
+                                                        "software": {}
+                                                    },
+                                                    "type": "object"
+                                                },
+                                                "domains": {
+                                                    "items": {
+                                                        "type": "string"
+                                                    },
+                                                    "type": "array"
+                                                },
+                                                "hash": {
+                                                    "type": "integer"
+                                                },
+                                                "hostnames": {
+                                                    "items": {
+                                                        "type": "string"
+                                                    },
+                                                    "type": "array"
+                                                },
+                                                "ip": {
+                                                    "type": "integer"
+                                                },
+                                                "ip_str": {
+                                                    "type": "string"
+                                                },
+                                                "isp": {
+                                                    "type": "string"
+                                                },
+                                                "location": {
+                                                    "properties": {
+                                                        "area_code": {},
+                                                        "city": {
+                                                            "type": "string"
+                                                        },
+                                                        "country_code": {
+                                                            "type": "string"
+                                                        },
+                                                        "country_code3": {},
+                                                        "country_name": {
+                                                            "type": "string"
+                                                        },
+                                                        "dma_code": {},
+                                                        "latitude": {
+                                                            "type": "number"
+                                                        },
+                                                        "longitude": {
+                                                            "type": "number"
+                                                        },
+                                                        "postal_code": {},
+                                                        "region_code": {
+                                                            "type": "string"
+                                                        }
+                                                    },
+                                                    "type": "object"
+                                                },
+                                                "opts": {
+                                                    "properties": {
+                                                        "raw": {
+                                                            "type": "string"
+                                                        }
+                                                    },
+                                                    "type": "object"
+                                                },
+                                                "org": {
+                                                    "type": "string"
+                                                },
+                                                "os": {},
+                                                "port": {
+                                                    "type": "integer"
+                                                },
+                                                "timestamp": {
+                                                    "type": "string"
+                                                },
+                                                "transport": {
+                                                    "type": "string"
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    }
+                                },
+                                "Parse_alert_header_schema_from_Shodan_request": {
+                                    "runAfter": {
+                                        "Parse_alert_body_schema_from_Shodan_request": [
+                                            "Succeeded"
+                                        ]
+                                    },
+                                    "type": "ParseJson",
+                                    "inputs": {
+                                        "content": "@triggerOutputs()['headers']",
+                                        "schema": {
+                                            "properties": {
+                                                "Accept": {
+                                                    "type": "string"
+                                                },
+                                                "Accept-Encoding": {
+                                                    "type": "string"
+                                                },
+                                                "Connection": {
+                                                    "type": "string"
+                                                },
+                                                "Content-Length": {
+                                                    "type": "string"
+                                                },
+                                                "Content-Type": {
+                                                    "type": "string"
+                                                },
+                                                "Host": {
+                                                    "type": "string"
+                                                },
+                                                "SHODAN-ALERT-ID": {
+                                                    "type": "string"
+                                                },
+                                                "SHODAN-ALERT-NAME": {
+                                                    "type": "string"
+                                                },
+                                                "SHODAN-ALERT-TRIGGER": {
+                                                    "type": "string"
+                                                },
+                                                "SHODAN-SIGNATURE-SHA1": {
+                                                    "type": "string"
+                                                },
+                                                "User-Agent": {
+                                                    "type": "string"
+                                                },
+                                                "sentry-trace": {
+                                                    "type": "string"
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    }
+                                },
+                                "Response_200_(OK)": {
+                                    "runAfter": {
+                                        "Send_data_to_Log_Analytics": [
+                                            "Succeeded"
+                                        ]
+                                    },
+                                    "type": "Response",
+                                    "kind": "Http",
+                                    "inputs": {
+                                        "statusCode": 200
+                                    }
+                                },
+                                "Send_data_to_Log_Analytics": {
+                                    "runAfter": {
+                                        "Parse_alert_header_schema_from_Shodan_request": [
+                                            "Succeeded"
+                                        ]
+                                    },
+                                    "type": "ApiConnection",
+                                    "inputs": {
+                                        "body": "{\n\"ShodanAlertTrigger\":\"@{body('Parse_alert_header_schema_from_Shodan_request')?['SHODAN-ALERT-TRIGGER']}\",\n\"ShodanAlertID\":\"@{body('Parse_alert_header_schema_from_Shodan_request')?['SHODAN-ALERT-ID']}\",\n\"ShodanTimestamp\":\"@{body('Parse_alert_body_schema_from_Shodan_request')?['timestamp']}\",\n\"Module\":\"@{body('Parse_alert_body_schema_from_Shodan_request')?['_shodan']?['module']}\",\n\"IPAddress\":\"@{body('Parse_alert_body_schema_from_Shodan_request')?['ip_str']}\",\n\"Port\":\"@{body('Parse_alert_body_schema_from_Shodan_request')?['port']}\",\n\"Transport\":\"@{body('Parse_alert_body_schema_from_Shodan_request')?['transport']}\",\n\"Org\":\"@{body('Parse_alert_body_schema_from_Shodan_request')?['org']}\",\n\"Country\":\"@{body('Parse_alert_body_schema_from_Shodan_request')?['location']?['country_name']}\"\n}",
+                                        "headers": {
+                                            "Log-Type": "ShodanMonitorAlerts"
+                                        },
+                                        "host": {
+                                            "connection": {
+                                                "name": "@parameters('$connections')['azureloganalyticsdatacollector']['connectionId']"
+                                            }
+                                        },
+                                        "method": "post",
+                                        "path": "/api/logs"
+                                    }
+                                }
+                            },
+                            "runAfter": {},
+                            "else": {
+                                "actions": {
+                                    "Response_403_(Forbidden)": {
+                                        "runAfter": {},
+                                        "type": "Response",
+                                        "kind": "Http",
+                                        "inputs": {
+                                            "statusCode": 403
+                                        }
+                                    }
+                                }
+                            },
+                            "expression": {
+                                "and": [
+                                    {
+                                        "contains": [
+                                            "@triggerOutputs()['headers']",
+                                            "SHODAN-ALERT-TRIGGER"
+                                        ]
+                                    }
+                                ]
+                            },
+                            "type": "If"
+                        }
+                    },
+                    "outputs": {
+                    }
+                },
+                "parameters": {
+                    "$connections": {
+                        "value": {
+                            "azureloganalyticsdatacollector": {
+                                "connectionId": "[resourceId('Microsoft.Web/connections', parameters('Log_Analytics_Connection_Name'))]",
+                                "id": "[concat(subscription().id, '/providers/Microsoft.Web/locations/', parameters('location'), '/managedApis/', 'azureloganalyticsdatacollector')]"
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    ]
+}

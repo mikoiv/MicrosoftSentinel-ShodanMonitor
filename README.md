@@ -1,10 +1,8 @@
-# AzureSentinel-ShodanMonitor
+# MicrosoftSentinel-ShodanMonitorAlerts
 
-## Background
+## Introduction
 
-This is a proof-of-concept solution for ingesting Shodan Monitor alerts to Azure Sentinel.
-
-Shodan Monitor is a service for Shodan subscribers that can detect the following issues in any public endpoints, hosts or addresses you configure for monitoring:
+Shodan Monitor is a service for Shodan subscribers that can detect the following issues in publicly available networks and hosts:
 * Services associated with ICS or IoT devices
 * Compromised or malware-related services
 * New open ports, uncommon open ports
@@ -12,60 +10,30 @@ Shodan Monitor is a service for Shodan subscribers that can detect the following
 * Known vulnerabilities
 * Expired certificates
 
-Shodan Monitor has a Notification service that can send these alerts via email, instant messaging or a Notification Webhook.
+In brief it is a method of managing public attack surface, usually for your own assets.
 
-The Notification Webhook sends an HTTP POST request every time it detects an issue that matches the alert triggers you have configured in Shodan Monitor. The request contains alert metadata in the HTTP headers and Shodan database based host data in the body.
+This repository contains simple Microsoft Sentinel Logic App for ingesting Shodan Monitor alerts to Sentinel for you to query and alert on:
 
-This solution provides a method of ingesting the Notification Webhook alerts to Azure Sentinel for alerting and hunting. It uses a Logic App HTTP endpoint that listens to incoming requests, parses a selected amount of the alert data into variables and writes those to the Log Analytics Workspace.
+[![Log query](https://github.com/mikoiv/MicrosoftSentinel-ShodanMonitor/blob/main/Images/sentinel-query.png)](https://github.com/mikoiv/MicrosoftSentinel-ShodanMonitor/blob/main/Images/sentinel-query.png)
 
-You can find the official Notification Webhook documentation here: https://help.shodan.io/developer-fundamentals/monitor-webhooks
+For further details you can read the following writeup: 
 
-## Current status
+**http://secopslab.fi/2021-12-microsoftsentinel-shodanmonitor/**
 
-At the moment the solution only gathers the following data:
-* SHODAN-ALERT-ID, SHODAN-ALERT-NAME, SHODAN-ALERT-TRIGGER (headers)
-* Hostname, IP Address, Port (body)
+## Deployment
 
-Reason for the simplicity is that at the moment I don't have enough time to learn certain things about Logic Apps that are still unfamiliar for me. For example I am unsure on the best way to combine the header and post data, instead of creating individual variables via two different methods. 
+[![Deploy to Azure](https://aka.ms/deploytoazurebutton)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fmikoiv%2FMicrosoftSentinel-ShodanMonitor%2Fmain%2Fazuredeploy.json)
 
-Another problem I faced is that the Shodan request does not have Content-Type set to JSON, which is something that Logic App expects. This gave me some trouble when I tried to parse the full body schema in a cleaner way.
+## Parameters 
 
-Here is a visualization from the current version in Logic App designer:
+When deploying the template you have the following parameters to configure: 
 
-[![Designer](https://github.com/mikoiv/AzureSentinel-ShodanMonitor/blob/main/LogicApp_designer_view.png)](https://github.com/mikoiv/AzureSentinel-ShodanMonitor/blob/main/LogicApp_designer_view.png)
-
-After creating the Logic App, you can find the custom listener URL from the first Logic App action:
-
-[![URL](https://github.com/mikoiv/AzureSentinel-ShodanMonitor/blob/main/LogicApp_URL.png)](https://github.com/mikoiv/AzureSentinel-ShodanMonitor/blob/main/LogicApp_URL.png)
-
-You can configure a new Notification Webhook in Shodan Monitor configuration based on the URL:
-
-[![ShodanConfig](https://github.com/mikoiv/AzureSentinel-ShodanMonitor/blob/main/Shodan_configuration.png)](https://github.com/mikoiv/AzureSentinel-ShodanMonitor/blob/main/Shodan_configuration.png)
-
-Make sure you enable this notification method when you add and configure your assets in Shodan Monitor. 
-
-Depending on your assets and environment you will start getting new alerts sooner or later. A good way to test is to add new networks that you know will generate findings. Shodan Monitor also has a Test Webhook action, but be aware that the test will not contain any data so you will not see much in Sentinel, but you can use it to make sure the basic logic works if you want.
-
-## Results in Sentinel
-
-Here is a screenshot of the current data model in Azure Sentinel:
-
-[![Sentinel](https://github.com/mikoiv/AzureSentinel-ShodanMonitor/blob/main/Sentinel_log_query.png)](https://github.com/mikoiv/AzureSentinel-ShodanMonitor/blob/main/Sentinel_log_query.png)
-
-Even with this base amount of data there are decent use cases for correlating, alerting or hunting for things related to your your public security posture and attack surface with Azure Sentinel.
-
-## Development needs
-
-As you can see, this solution is extremely simple. I am sure the Logic App could be written with better code, for a production setup you would want to think about the following:
-* Handle the header and body data in a more robust way
-* Map the full Shodan JSON schema to fetch the hostname, vulnerability data, country codes etc
-* Think about error handling
-* Harden the solution for your security needs
-
-In this proof-of-concept security and authentication is just based on making sure you transfer the custom Logic App HTTP listener URL to Shodan in a secure manner. This can be developed further with the Logic App or even creating a API Management service to act as a secure front-end for your Logic App HTTP listeners.
-
-I created the solution as a quick test in the Logic App UI, so no automation template for you just yet. Manually exported code from the Logic App is included, so you can have a look at that.
-
-
-
+ | Parameter  | Description |
+| ------------- | ------------- |
+| **Resource Group** | Resource group for deployed resources |
+| **Region**| Azure region for deployed resources |
+| **Playbook Name**  | Logic App name (default: ShodanMonitor-Sentinel) | 
+| **Log Analytics Connection Name** | API connection name (default: loganalyticsconnection-ShodanMonitor-Sentinel)|
+| **Log Analytics Workspace ID**|Enter the unique ID of your Azure Log Analytics workspace|
+| **Log Analytics Workspace Key**|Enter the primary or secondary key of your Azure Log Analytics workspace|
 
