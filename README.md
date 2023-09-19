@@ -18,7 +18,7 @@ This repository contains an Azure Logic App for ingesting Shodan Monitor alerts 
 
 For further details and instructions you can read the following writeup: 
 
-**http://secopslab.fi/2021-12-microsoftsentinel-shodanmonitor/**
+**https://secopslab.substack.com/p/shodan-monitor-alerts-to-microsoft**
 
 ## Deployment
 
